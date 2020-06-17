@@ -23,8 +23,19 @@ if __name__ == '__main__':
     main()
     
     
+    mat = [[2,5,8],[5,8,9]]
+    s=""
+    i=0
+    while i < 2:#needs to be the numbers of rows
+       
+       for x in mat[i]:#number of cols
+           s+=str(float(x))+" "
+       i += 1
+    print(s)     
     
-   #33#3333322222 elishevada
+    
+    
+   
     
     
     
