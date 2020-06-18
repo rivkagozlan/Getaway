@@ -1,51 +1,35 @@
-from Getaway import Getaway
-
-class GWmanager:
-    def __init__(self):
-        self.__values = ["temperature","AmountOfRain","windSpeed","WindDirection","NearGroundTemperature","RelativeHumidity","TopGustSpeed","AtmosphericPressure","UpperWindDirection","GlobalRadiation"]
-        self.deviationValues()
-        self.extremeValues()
-
-    def deviationValues(self):
-        matUpperDeviation=[]
-        matExtremeValues=[]
-        
-        defult = input("To fill the deviation values vector with defult values- press 0, If no- press 1")
-        
-        if(input == 0):
-            matUpperDeviation = [[10,40],[14,20],[33,70.9],[0.5,5],[3,9.1],[5,9],[66,100],[33,77],[68.7,200],[11,68]]
-            return
+from Getaway import Getaway             
+    
+#The function fills the deviation or extreme values vector with the values that the user enters or with the default values of his choice.
+def enterValues(valuesVec, values):
+    for i in range (10):
+        valuesVec.append([])
+        for j in range (2):
+            valuesVec[i].append([])
+    
+    for i in range (10):
+        print("<" +values[i]+">:")
+        valuesVec[i][0], valuesVec[i][1] = input("   upper value: "), input("   lower value: ")
             
-        for i in range (10):
-            matUpperDeviation.append([])
-            for j in range (2):
-                matUpperDeviation[i].append([])
-    
-        for i in range (10):    
-            for j in range (2):
-                if j==0:
-                    matUpperDeviation[i][j]=input("Please input an upper deviation values of " +self.__values[i])
-                elif j==1:
-                    matUpperDeviation[i][j]=input("Please input an lower deviation value of " +self.__values[i])                
-    
-    def extremeValues(self):
-        defult = input("To fill the deviation values vector with defult values- press 0, If no- press 1")
-        
-        if(input == 1):
-            matUpperDeviation = [[10,40],[14,20],[33,70.9],[0.5,5],[3,9.1],[5,9],[66,100],[33,77],[68.7,200],[11,68]]
-            return
-        
-        for i in range (10):
-            matExtremeValues.append([])
-            for j in range (2):
-                matExtremeValues[i].append([])
-    
-        for i in range (10):    
-            for j in range (2):
-                if j==0:
-                    matUpperDeviation[i][j]=input("Please input an upper extreme values of " +self.__values[i])
-                elif j==1:
-                    matUpperDeviation[i][j]=input("Please input an lower Extreme value of " +self.__values[i])
-    
 
-#gwM = GWmanager()
+def main():
+    values = ["temperature","AmountOfRain","windSpeed","WindDirection","NearGroundTemperature","RelativeHumidity","TopGustSpeed","AtmosphericPressure","UpperWindDirection","GlobalRadiation"]
+    matUpperDeviation=[]
+    matExtremeValues=[]
+    defult = input("To fill the deviation and extreme values vectors with defult values- press 0, If no- press 1: ")
+    if(defult == "0"):
+        matUpperDeviation = [[2.3,1.4],[3.1,5.66],[10.1,11],[0.5,5],[3,9.1],[5,9],[2.97,3],[2,3],[3.7,2],[4,4.5]]
+        matExtremeValues = [[5.3,2.4],[4.1,7.99],[15.1,17],[3.5,16],[9,11.1],[9,11],[4.97,5],[3,4],[6.7,6],[5,6.5]]
+    elif(defult == "1"): 
+        print("--------Please input the deviation values:")        
+        enterValues(matUpperDeviation, values)
+        print("\n--------Please input the extreme values:")        
+        enterValues(matExtremeValues, values)        
+    else:
+        main()
+    
+    gw = Getaway(matUpperDeviation, matExtremeValues)
+    gw.run_server()
+
+if __name__ == "__main__":
+    main()
