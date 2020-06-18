@@ -61,10 +61,9 @@ class Mat:
         i=0
         while i < self.__numRows:         
             for x in self.__mat[i]:#number of cols
-                s+=str("%.4f" % x)+","
+                s+=str("%.4f" % x)
             i += 1
-        s = s[:-1]
+        s+=str("%.4f" % 0)
         return s
     
             
-               

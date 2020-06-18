@@ -5,8 +5,7 @@ class Deltas:#Additions to original class
         self.__indexesVec = array("h")
         self.__valuesVec = array("f")
         
-        #self.__maxDeltasNum = 100
-        self.__maxDeltasNum = 2
+        self.__maxDeltasNum = 100
         
     def getMaxDeltasNum(self):
         return self.__maxDeltasNum
@@ -21,9 +20,7 @@ class Deltas:#Additions to original class
         self.__indexesVec.append(compressedIndexes)
         self.__valuesVec.append(data)
         ##################################################################
-        print("*********************************")
-        print("------ You added a delta to the buffer ------\nThe deltas vector as string: ",self.getAsString())
-        print("*********************************\n")
+        print("\n------ You added a delta to the buffer ------\nThe deltas vector as string: ",self.getAsString(),"\n")
         ##################################################################
         return True
     
@@ -31,10 +28,9 @@ class Deltas:#Additions to original class
     def getAsString(self):
         deltas_str = ""
         for i in range(len(self.__indexesVec)):
-            deltas_str += str(int(self.__indexesVec[i]))+","            
-            #deltas_str += str("%.4f" % float(self.__indexesVec[i]))+","
-            deltas_str += str("%.4f" % self.__valuesVec[i])+","
-        deltas_str = deltas_str[:-1]
+            deltas_str += str("%.4f" % float(self.__indexesVec[i]))
+            deltas_str += str("%.4f" % self.__valuesVec[i])
+        deltas_str += str("%.4f" % 1)
         return deltas_str
     
     def clearDeltas(self):

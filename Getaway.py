@@ -20,7 +20,7 @@ class Getaway:#Additions to original class
         
         self.__client_socket = None
         
-        self.__msgRcvNum = 0
+        self.__msgRcvNum = 0 #Summarize the number of messages received up to the total number of sensors
     
     # The function initializes the thresholdVal array and the two matrices
     def __thresholdVal_Mats_init(self, thresholdVal_str):
@@ -57,7 +57,6 @@ class Getaway:#Additions to original class
     def __matsCompare(self):
         __numOfChanges = 0
         __maxChanges = 6000
-       # __maxChanges = 1
         
         #chcking if need to send all the matrix
         for i in range(self.__numSensors):
@@ -84,7 +83,6 @@ class Getaway:#Additions to original class
                     
                 #Checking deviation values
                 elif (self.__deviationVal[j][0]<=self.__upMat.getMat()[i][j]-self.__refMat.getMat()[i][j]) or (self.__deviationVal[j][1]<=self.__refMat.getMat()[i][j]-self.__upMat.getMat()[i][j]):
-                    print("i: "+str(i)+" ,j: "+str(j))
                     self.__refMat.getMat()[i][j] = self.__upMat.getMat()[i][j] #update the reference matrix
                     if(self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j]) == False):
                         #send delta
@@ -92,7 +90,7 @@ class Getaway:#Additions to original class
                         self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j])
                         
     def __sendToCloud(self, msg, clearDeltas):
-        self.__client_socket.send(msg.encode())#maby delete encode
+        self.__client_socket.send(msg.encode())
         if(clearDeltas):
             self.__deltasVec.clearDeltas()        
     
@@ -113,21 +111,26 @@ class Getaway:#Additions to original class
         thresholdVal_str = conn.recv(1024).decode()
         self.__thresholdVal_Mats_init(thresholdVal_str)
         
-        self.__run_client()
-        #in the begining, need we send something to the cloud?
-        #self.__client_socket.send(str.encode());
-        #self.__client_socket.close()                    
+        self.__run_client()                 
         
         while True: # Receiving updates from sensors
             sensorData = conn.recv(1024).decode()
-            print ("***** The message received:",sensorData," *****")
+            self.__msgRcvNum += 1
+            print("******************************************")
+            print ("Received:",sensorData)
             self.__handlesData(sensorData)
+            
             ###########################################################
-            print("\n************************************")
+            print("\n")
             print("line 0: ",self.__upMat.getRow(0),"\n")
-            print("ref line 0: ",self.__refMat.getRow(0),"\n")            
-            self.__matsCompare()
-            ###########################################################
+            print("ref line 0: ",self.__refMat.getRow(0),"\n")  
+            ###########################################################    
+            
+            #Comparing the matrices after receiving messages as the number of sensors
+            if(self.__msgRcvNum == self.__numSensors):
+                self.__matsCompare()
+                self.__msgRcvNum = 0
+            
 
         conn.close()
         
