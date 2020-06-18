@@ -30,7 +30,7 @@ class Deltas:#Additions to original class
         for i in range(len(self.__indexesVec)):
             deltas_str += str("%.4f" % float(self.__indexesVec[i]))
             deltas_str += str("%.4f" % self.__valuesVec[i])
-        deltas_str += str("%.4f" % 1)
+        deltas_str += str("%.4f" % 0)
         return deltas_str
     
     def clearDeltas(self):

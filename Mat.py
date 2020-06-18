@@ -63,7 +63,7 @@ class Mat:
             for x in self.__mat[i]:#number of cols
                 s+=str("%.4f" % x)
             i += 1
-        s+=str("%.4f" % 0)
+        s+=str("%.4f" % 1)
         return s
     
             
