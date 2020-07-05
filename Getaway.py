@@ -32,7 +32,6 @@ class Getaway:#Additions to original class
                 self.__thresholdVal[i].append([])
                 self.__thresholdVal[i][j] = float(vec[k])
                 k = k+1
-        #self.__upMat = Mat(None, self.__numSensors, self.__numIndices + 1, self.__thresholdVal)
         self.__upMat = Mat(None, self.__numSensors, self.__numIndices, self.__thresholdVal)        
         self.__refMat = Mat(self.__upMat)
         
@@ -49,14 +48,13 @@ class Getaway:#Additions to original class
         i = 0
         for i in range (self.__numIndices):
             row.append(float(tempVec[i]))
-        #row.append(self.__compressIndexes(int(tempVec[i+1]), int(tempVec[i+2])))         
         rowIndex = int(tempVec[i+3])
         self.__upMat.setRow(rowIndex, row)
-    
-    
+     
     def __matsCompare(self):
         __numOfChanges = 0
         __maxChanges = 6000
+        __exVal = False 
         
         #chcking if need to send all the matrix
         for i in range(self.__numSensors):
@@ -69,30 +67,33 @@ class Getaway:#Additions to original class
                         self.__sendToCloud(self.__refMat.getMatAsStr(), False)
     
         for i in range(self.__numSensors):
-            for j in range(self.__numIndices):
+            for j in range(self.__numIndices):            
                 #Testing the Critical Values
-                if (self.__extremeVal[j][0]<=self.__upMat.getMat()[i][j]-self.__refMat.getMat()[i][j]) or (self.__extremeVal[j][1]<=self.__refMat.getMat()[i][j]-self.__upMat.getMat()[i][j]):
+                if (__exVal == False and self.__extremeVal[j][0]<=self.__upMat.getMat()[i][j]-self.__refMat.getMat()[i][j]) or (self.__extremeVal[j][1]<=self.__refMat.getMat()[i][j]-self.__upMat.getMat()[i][j]):
                     print("we found extreme value")
-                    self.__refMat.getMat()[i][j] = self.__upMat.getMat()[i][j] #update the reference matrix
-                    if(self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j]) == False):
-                        #send delta
-                        self.__sendToCloud(self.__deltasVec.getAsString(), True)
-                        self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j])
-                    #send delta anyway
-                    self.__sendToCloud(self.__deltasVec.getAsString(), True)
+                    __exVal = True
                     
                 #Checking deviation values
-                elif (self.__deviationVal[j][0]<=self.__upMat.getMat()[i][j]-self.__refMat.getMat()[i][j]) or (self.__deviationVal[j][1]<=self.__refMat.getMat()[i][j]-self.__upMat.getMat()[i][j]):
+                if (self.__deviationVal[j][0]<=self.__upMat.getMat()[i][j]-self.__refMat.getMat()[i][j]) or (self.__deviationVal[j][1]<=self.__refMat.getMat()[i][j]-self.__upMat.getMat()[i][j]):
+                    print("------ Delta added for index: ",i,",",j," change from ",self.__refMat.getMat()[i][j]," to ",self.__upMat.getMat()[i][j]," ------")
                     self.__refMat.getMat()[i][j] = self.__upMat.getMat()[i][j] #update the reference matrix
                     if(self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j]) == False):
                         #send delta
+                        print("sent:  "+self.__deltasVec.getAsString()+"\n")
                         self.__sendToCloud(self.__deltasVec.getAsString(), True)
                         self.__deltasVec.addDelta(self.__compressIndexes(i,j).value,self.__refMat.getMat()[i][j])
+                        
+        #If we found extreme value- we send delta anyway       
+        if(__exVal == True):
+            print("sent:  "+self.__deltasVec.getAsString()+"\n")
+            self.__sendToCloud(self.__deltasVec.getAsString(), True)
                         
     def __sendToCloud(self, msg, clearDeltas):
         self.__client_socket.send(msg.encode())
         if(clearDeltas):
-            self.__deltasVec.clearDeltas()        
+            self.__deltasVec.clearDeltas()    
+        print("*********************************************sent")
+        
     
     def __run_client(self):
         self.__client_socket = socket.socket()
@@ -109,9 +110,13 @@ class Getaway:#Additions to original class
         
         #receiving the threshold values as string
         thresholdVal_str = conn.recv(1024).decode()
+        print("******************************************")
+        print ("Received:",thresholdVal_str)        
         self.__thresholdVal_Mats_init(thresholdVal_str)
         
-        self.__run_client()                 
+        self.__run_client()
+        #Sending the initial matrix to the cloud
+        self.__sendToCloud(self.__refMat.getMatAsStr(), False)
         
         while True: # Receiving updates from sensors
             sensorData = conn.recv(1024).decode()
@@ -120,14 +125,9 @@ class Getaway:#Additions to original class
             print ("Received:",sensorData)
             self.__handlesData(sensorData)
             
-            ###########################################################
-            print("\n")
-            print("line 0: ",self.__upMat.getRow(0),"\n")
-            print("ref line 0: ",self.__refMat.getRow(0),"\n")  
-            ###########################################################    
-            
             #Comparing the matrices after receiving messages as the number of sensors
-            if(self.__msgRcvNum == self.__numSensors):
+            #if(self.__msgRcvNum == self.__numSensors):
+            if(self.__msgRcvNum == 20):
                 self.__matsCompare()
                 self.__msgRcvNum = 0
             

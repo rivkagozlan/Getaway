@@ -31,11 +31,6 @@ class Mat:
         for i in range (self.__numRows):
             for j in range (self.__numColumns):
                 self.__mat[i][j] = random.uniform(thresholdVal[j][0], thresholdVal[j][1])
-                
-                #if(j != self.__numColumns - 1):
-                    #self.__mat[i][j] = random.uniform(thresholdVal[j][0], thresholdVal[j][1]) 
-                #else:
-                    #self.__mat[i][j] = -1 # In the initialiesing the indexes value will be -1
 
     def getRow(self, index):
         return self.__mat[index]
@@ -64,6 +59,7 @@ class Mat:
                 s+=str("%.4f" % x)
             i += 1
         s+=str("%.4f" % 1)
+        s+="*"
         return s
     
             
