@@ -11,12 +11,12 @@ The goal of our project is to compress the data so that no load and duplication 
 For this purpose, in our program, we are testing whether the data should be updated according to the deviation values that the user enters and then, using Data Compression Algorithm - the information is sent to the cloud.
 <br/><br/>
 #### ==Program Files==
-GWmanager.py- user input and GETAWAY activation.<br/>
-Getaway.py- server and client, including data processing.<br/>
-Mat.py- realize a matrix for the data storage.<br/>
-Delta.py- data storage for limited sending to the cloud.
+- GWmanager.py- user input and GETAWAY activation.<br/>
+- Getaway.py- server and client, including data processing.<br/>
+- Mat.py- realize a matrix for the data storage.<br/>
+- Delta.py- data storage for limited sending to the cloud.
 
-Simulations of the other two sub-projects: client.py, server.py
+- Simulations of the other two sub-projects: client.py, server.py
 <br/><br/>
 #### ==How to compile?==
 Open three command line, one of them runs the command: python GWmanager.py<br/>
