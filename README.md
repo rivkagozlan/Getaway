@@ -1,6 +1,7 @@
 # Getaway
 
 Getaway for a Smart Field project
+
 Authored by: Rivka, Miri, Elisheva and Shir 
 
 ==Description==
