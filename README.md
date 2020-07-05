@@ -3,9 +3,9 @@ Getaway for a Smart Field project
 
 Authored by: [Rivka](https://www.linkedin.com/in/rivka-gozlan/), [Miri](https://www.linkedin.com/in/miri-zakay-3b5a521aa/), Elisheva and Shir
 
-###### ==Description==
+##### ==Description==
 This project is a sub-project for a "Smart Field" project.
-(The other two sub-projects: Cloud-to-Ground)
+(The other two sub-projects: [Cloud-to-Ground](https://github.com/sheindyfr/Cloud-to-Ground)).
 The main project simulates a smart filed. The sensors (-IOT devices) transmit a lot of data (temperature, rainfall, etc.) to a client side- the 'GETWAY', and it transmits the necessary information to a server side- the cloud, that updates them in a DATABASE.
 The goal of our project is to compress the data so that no load and duplication is created.
 For this purpose, in our program, we are testing whether the data should be updated according to the deviation values that the user enters and then, using Data Compression Algorithm - the information is sent to the cloud.
