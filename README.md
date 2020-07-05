@@ -1,16 +1,14 @@
 # Getaway
-Getaway for a Smart Field project
+#### Getaway for a Smart Field project
 
 Authored by: [Rivka](https://www.linkedin.com/in/rivka-gozlan/), [Miri](https://www.linkedin.com/in/miri-zakay-3b5a521aa/), Elisheva and Shir
 <br/><br/>
-
 #### ==Description==
 This project is a sub-project for a "Smart Field" project.<br/>
 (The other two sub-projects: [Cloud-to-Ground](https://github.com/sheindyfr/Cloud-to-Ground))<br/>
 The main project simulates a smart filed. The sensors (-IOT devices) transmit a lot of data (temperature, rainfall, etc.) to a client side- the 'GETWAY', and it transmits the necessary information to a server side- the cloud, that updates them in a DATABASE.<br/>
 The goal of our project is to compress the data so that no load and duplication is created.<br/>
 For this purpose, in our program, we are testing whether the data should be updated according to the deviation values that the user enters and then, using Data Compression Algorithm - the information is sent to the cloud.
-
 <br/><br/>
 #### ==Program Files==
 GWmanager.py- user input and GETAWAY activation.<br/>
@@ -19,7 +17,6 @@ Mat.py- realize a matrix for the data storage.<br/>
 Delta.py- data storage for limited sending to the cloud.
 
 Simulations of the other two sub-projects: client.py, server.py
-
 <br/><br/>
 #### ==How to compile?==
 Open three command line, one of them runs the command: python GWmanager.py<br/>
