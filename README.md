@@ -2,7 +2,7 @@
 
 Getaway for a Smart Field project
 
-Authored by: Rivka, Miri, Elisheva and Shir 
+Authored by: [![Rivka](                                )](https://nodesource.com/products/nsolid), Miri, Elisheva and Shir 
 
 ==Description==
 
