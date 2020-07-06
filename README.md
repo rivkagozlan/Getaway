@@ -20,7 +20,7 @@ For this purpose, in our program, we are testing whether the data should be upda
 <br/><br/>
 #### ==How to compile?==
 Open three command line, one of them runs the command: python GWmanager.py<br/>
-Then insert data there according to the instructions. In the second- the command: python server.py (or [Cloud-to-Ground](https://github.com/sheindyfr/Cloud-to-Ground)) program).<br/>
+Then insert data there according to the instructions. In the second- the command: python server.py (or [Cloud-to-Ground](https://github.com/sheindyfr/Cloud-to-Ground) program).<br/>
 In the third- the command: python client.py (or the program of group 1)
 
 If you do not run the Group 1 program but the client.py:<br/>
