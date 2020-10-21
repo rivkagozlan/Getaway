@@ -29,3 +29,4 @@ Enter a set of threshold values in the third instance, an example:<br/>
 Then messages from the sensors, example message:<br/>
 10,20,30,40,50,60,70,80,8,90,100,1,1,0
 
+![Running image](https://github.com/rivkagozlan/Getaway/blob/master/Running%20image.JPG)
